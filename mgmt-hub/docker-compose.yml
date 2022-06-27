@@ -18,6 +18,8 @@ services:
     image: ${AGBOT_IMAGE_NAME}:${AGBOT_IMAGE_TAG}
     container_name: agbot
     restart: always
+    security_opt:
+      - apparmor=kubearmor_agbot
     ports:
       - 127.0.0.1:${AGBOT_PORT}:${AGBOT_INTERNAL_PORT}
       - ${HZN_LISTEN_IP}:${AGBOT_SECURE_PORT}:${AGBOT_INTERNAL_SECURE_PORT}
@@ -49,6 +51,8 @@ services:
     image:  ${EXCHANGE_IMAGE_NAME}:${EXCHANGE_IMAGE_TAG}
     container_name: exchange-api
     restart: always
+    security_opt:
+      - apparmor=kubearmor_exchange-api
     ports:
       - ${HZN_LISTEN_IP}:${EXCHANGE_PORT}:8080
     networks:
@@ -72,6 +76,8 @@ services:
     image: ${POSTGRES_IMAGE_NAME}:${POSTGRES_IMAGE_TAG}
     container_name: postgres
     restart: always
+    security_opt:
+      - apparmor=kubearmor_postgres
     volumes:
       - postgresvol:/var/lib/postgresql/data
     networks:
@@ -90,6 +96,8 @@ services:
     image: ${CSS_IMAGE_NAME}:${CSS_IMAGE_TAG}
     container_name: css-api
     restart: always
+    security_opt:
+      - apparmor=kubearmor_css-api
     ports:
       - ${HZN_LISTEN_IP}:${CSS_PORT}:8080
     networks:
@@ -116,6 +124,8 @@ services:
     image: ${MONGO_IMAGE_NAME}:${MONGO_IMAGE_TAG}
     container_name: mongo
     restart: always
+    security_opt:
+      - apparmor=kubearmor_mongo
     networks:
       - horizonnet
     volumes:
@@ -130,6 +140,8 @@ services:
     image: ${SDO_IMAGE_NAME}:${SDO_IMAGE_TAG}
     container_name: sdo-owner-services
     restart: always
+    security_opt:
+      - apparmor=kubearmor_sdo-owner-services
     ports:
       - ${HZN_LISTEN_IP}:${SDO_OCS_API_PORT}:${SDO_OCS_API_PORT}
       - ${HZN_LISTEN_IP}:${SDO_RV_PORT}:${SDO_RV_PORT}
@@ -169,6 +181,8 @@ services:
     image: ${VAULT_IMAGE_NAME}:${VAULT_IMAGE_TAG}
     container_name: vault
     restart: always
+    security_opt:
+      - apparmor=kubearmor_vault
     ports:
       - ${HZN_LISTEN_IP}:${VAULT_PORT}:${VAULT_PORT}
     networks:
